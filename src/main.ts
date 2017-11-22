@@ -8,5 +8,6 @@ if (environment.production) {
   enableProdMode();
 }
 
+// 完成 程序的引导模块加载
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.log(err));

@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
     AppRoutingModule
   ],
   providers: [],
+  // 加载主组件引导
   bootstrap: [AppComponent]
 })
 export class AppModule { }
