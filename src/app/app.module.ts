@@ -8,6 +8,8 @@ import { InsertdataComponent } from './componets/daytwo/insertdata/insertdata.co
 import { BindeventComponent } from './componets/daytwo/bindevent/bindevent.component';
 import { DomattributeComponent } from './componets/daytwo/domattribute/domattribute.component';
 import { HtmlattributeComponent } from './componets/daytwo/htmlattribute/htmlattribute.component';
+import { ClassattributeComponent } from './componets/daytwo/classattribute/classattribute.component';
+import { StyleattributeComponent } from './componets/daytwo/styleattribute/styleattribute.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { HtmlattributeComponent } from './componets/daytwo/htmlattribute/htmlatt
     InsertdataComponent,
     BindeventComponent,
     DomattributeComponent,
-    HtmlattributeComponent
+    HtmlattributeComponent,
+    ClassattributeComponent,
+    StyleattributeComponent
   ],
   imports: [
     BrowserModule,

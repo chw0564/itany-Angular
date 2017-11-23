@@ -1,0 +1,25 @@
+<h4>class的属性操作</h4>
+<div class="red bc fs">div组件</div>
+<div class="{{ fontColor }}">插值绑定</div>
+<div [class]="fontColor">属性指令</div>
+<hr>
+<!-- 
+    选择样式绑定
+    [class.样式名] = "boolean属性"
+    boolean属性 为 true 样式加载
+    boolean属性 为 false 样式不加载
+ -->
+ <div [class.red]="clsList.red" [class.bc]="clsList.bc" [class.fs]="clsList.fs">选择显示</div>
+ <input type="button" value="切换颜色" (click)="clsList.red = !clsList.red">
+ <input type="button" value="切换背景" (click)="clsList.bc = !clsList.bc">
+ <input type="button" value="切换大小" (click)="clsList.fs = !clsList.fs">
+
+ <hr>
+ <!-- 
+     定义的内置指令
+     [ngClass] 取值是一个 json 对象
+     key 是样式名  ： value 为 true或false
+                        true 样式加载
+                        alse 样式不加载
+-->
+<div [ngClass]="clsList" >ngClass</div>
