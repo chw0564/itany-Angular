@@ -6,6 +6,8 @@ import { NewoneComponent } from './componets/dayOne/newone/newone.component';
 import { TemplateComponent } from './componets/daytwo/template/template.component';
 import { InsertdataComponent } from './componets/daytwo/insertdata/insertdata.component';
 import { BindeventComponent } from './componets/daytwo/bindevent/bindevent.component';
+import { DomattributeComponent } from './componets/daytwo/domattribute/domattribute.component';
+import { HtmlattributeComponent } from './componets/daytwo/htmlattribute/htmlattribute.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,9 @@ import { BindeventComponent } from './componets/daytwo/bindevent/bindevent.compo
     NewoneComponent,
     TemplateComponent,
     InsertdataComponent,
-    BindeventComponent
+    BindeventComponent,
+    DomattributeComponent,
+    HtmlattributeComponent
   ],
   imports: [
     BrowserModule,

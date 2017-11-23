@@ -1,0 +1,40 @@
+
+   <!-- 
+     属性操作中 请遵循 天平不平横
+    【】 = "" 
+     "" = { { } }" 
+  -->
+<h4>DOM 属性指令 （DOM属性的绑定）</h4>
+<!-- <div [id]="'a'">div</div> -->
+<div [id]="divId">div</div>
+<div id="{{divId}}">div</div>
+<input type="button" value="改变divId值" (click)="changeId()" >
+<hr>
+<div [innerHTML]="str"></div>
+<div innerHTML="{{ str }}" ></div>
+<div>{{ str }}</div>
+<input type="button" value="改变divId值" (click)="changeStr()" >
+<hr>
+<div class="{{ classStr }}">aaaaaaaa</div>
+<div [className]="classStr" >aaaaaaaa</div>
+<div [class]="classStr" >aaaaaaaa</div>
+<hr>
+<h4>延迟数据写入</h4>
+<pre>
+  1、使用插值方式对属性进行数据写入，默认值如果是null 或者 undefined 
+     插值表达式会自动 将值转换为  “”
+  2、使用属性指令对属性进行数据写入时，默认值如果是null 或者 undefined
+     属性指令 会直接将值赋值为null
+  3、对于插值方式对属性进行数据写入时，如果所操作的属性具有及时请求效果，
+     插值表达式会 会对 null 或者 undefined 进行拦截，阻止请求发送
+  4、对于属性指令对属性进行数据写入时，如果所操作的属性具有及时请求效果，
+     属性指令 只关心 数据是否写入
+
+</pre>
+<img src="{{ src }}">
+<img [src]="src">
+<input type="button" value="加载图片" (click)="changeImgSrc()">
+<hr>
+<input type="text" disabled="{{ flag }}">
+<input type="text" [disabled]="flag">
+<input type="button" value="改变状态" (click)="flag = !flag">
