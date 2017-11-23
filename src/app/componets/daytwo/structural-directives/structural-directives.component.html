@@ -1,0 +1,26 @@
+<h3>ngIf</h3>
+<div *ngIf="flag">元素判断1</div>
+<div *ngIf="!flag">元素判断2</div>
+<input type="button" value="切换" (click)="flag = !flag">
+
+<hr>
+<h3>ngSwitch</h3>
+<input type="button" value="只显示jack" (click)="name='jack'" >
+<input type="button" value="只显示tom" (click)="name='tom'">
+<input type="button" value="只显示老司机" (click)="name='laosij'">
+<input type="button" value="只显示未知" (click)="name=null">
+<!-- 
+  [ngSwitch] = "conditionExpression"
+    conditionExpression ==>  case 所需要匹配的参数
+  *ngSwitchCase = "condition"
+    condition  ==>  用于匹配的条件
+  *ngSwitchDefault 没有取值
+
+ -->
+<ul [ngSwitch]="name">
+  <li *ngSwitchCase="'jack'">jack</li>
+  <li *ngSwitchCase="'tom'">tom</li>
+  <li *ngSwitchCase="'laosij'">老司机</li>
+  <li *ngSwitchDefault>未知</li>
+</ul>
+

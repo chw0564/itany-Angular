@@ -10,6 +10,7 @@ import { DomattributeComponent } from './componets/daytwo/domattribute/domattrib
 import { HtmlattributeComponent } from './componets/daytwo/htmlattribute/htmlattribute.component';
 import { ClassattributeComponent } from './componets/daytwo/classattribute/classattribute.component';
 import { StyleattributeComponent } from './componets/daytwo/styleattribute/styleattribute.component';
+import { StructuralDirectivesComponent } from './componets/daytwo/structural-directives/structural-directives.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { StyleattributeComponent } from './componets/daytwo/styleattribute/style
     DomattributeComponent,
     HtmlattributeComponent,
     ClassattributeComponent,
-    StyleattributeComponent
+    StyleattributeComponent,
+    StructuralDirectivesComponent
   ],
   imports: [
     BrowserModule,

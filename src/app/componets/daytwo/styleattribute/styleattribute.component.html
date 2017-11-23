@@ -1,3 +1,24 @@
-<p>
-  styleattribute works!
-</p>
+<h4>style 属性的操作</h4>
+<div style="color:red;font-size:30px">div1……</div>
+<!-- <div [style]="style">div</div>
+<div style="{{style}}">div</div> -->
+<hr>
+<!-- 
+  语法：
+      [style.样式名.单位] = "值"
+              单位 是可以不写
+ -->
+ <div [style.color]="'red'">div2……</div>
+ <div [style.font-size]="'20px'">div3……</div>
+ <div [style.font-size.rem]="'20'">div3……</div>
+
+ <!-- 
+    内置的 style 的绑定的 指令
+    [ngStyle] = json
+
+    key:样式名
+    value:样式所对应的值
+
+  -->
+  <div [ngStyle]="styleList">div3……</div>
+  <input type="button" value="改变颜色" (click)="styleList.color = 'green'">
