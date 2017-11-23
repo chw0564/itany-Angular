@@ -1,0 +1,32 @@
+<h1>插值表达式</h1>
+<h3>普通文本</h3>
+<p>{{ '这是一个普通字符串' }}</p>
+<p>{{ 1 }}</p>
+<p>{{ true }}</p>
+<p>{{ aaa }}</p>
+<p>{{ str }}</p>
+<hr>
+<h3>计算</h3>
+<p>{{ 2+3 }}</p>
+<hr>
+<h3>表达式</h3>
+<p>{{ 1==1? "是":"否" }}</p>
+<hr>
+<h3>元素属性值得绑定</h3>
+<input type="text" name="{{name}}">
+<hr>
+<h3>延迟数据写入</h3>
+<h5>{{ test }}</h5>
+<img src="{{ test }}">
+<div id="{{ test }}"></div>
+<a href="{{ test }}"></a>
+<hr>
+<!-- <div itany="{{ itany }}"></div> -->
+<h3>插值表达式调用方法</h3>
+<p>{{ this.getString() }}</p>
+
+<hr>
+<button type="button" (click)="show()" >触发事件</button>
+<h4>{{ flag }}</h4>
+<!-- <button type="button" (click)="flag = !flag" >表达式</button> -->
+<button type="button" (click)="this.flag = !this.flag" >表达式</button>

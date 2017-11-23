@@ -3,11 +3,17 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NewoneComponent } from './componets/dayOne/newone/newone.component';
+import { TemplateComponent } from './componets/daytwo/template/template.component';
+import { InsertdataComponent } from './componets/daytwo/insertdata/insertdata.component';
+import { BindeventComponent } from './componets/daytwo/bindevent/bindevent.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NewoneComponent
+    NewoneComponent,
+    TemplateComponent,
+    InsertdataComponent,
+    BindeventComponent
   ],
   imports: [
     BrowserModule,
