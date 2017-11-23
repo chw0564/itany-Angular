@@ -24,4 +24,8 @@ export class BindeventComponent implements OnInit {
     return "方法返回值";
   }
 
+  private hanldClick(e){
+    console.log(e);
+  }
+
 }
