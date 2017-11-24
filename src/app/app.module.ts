@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'
 
+import { PowPipe } from './pipes/pow.pipe'
+import { NameFilterPipe } from './pipes/name-filter.pipe';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -18,9 +21,13 @@ import { NgForComponent } from './componets/dayThree/ng-for/ng-for.component';
 import { TwowayBinddataComponent } from './componets/dayThree/twoway-binddata/twoway-binddata.component';
 import { UserMangerComponent } from './componets/dayThree/user-manger/user-manger.component';
 import { CommonPipeComponent } from './componets/dayThree/common-pipe/common-pipe.component';
+import { UserPipeComponent } from './componets/dayThree/user-pipe/user-pipe.component';
+
 
 @NgModule({
   declarations: [
+    PowPipe,
+    NameFilterPipe,
     AppComponent,
     NewoneComponent,
     TemplateComponent,
@@ -34,7 +41,9 @@ import { CommonPipeComponent } from './componets/dayThree/common-pipe/common-pip
     NgForComponent,
     TwowayBinddataComponent,
     UserMangerComponent,
-    CommonPipeComponent
+    CommonPipeComponent,
+    UserPipeComponent,
+    
   ],
   imports: [
     BrowserModule,

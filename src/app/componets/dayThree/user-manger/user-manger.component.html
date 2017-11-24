@@ -1,4 +1,6 @@
 <br><br>
+<input type="text" [(ngModel)]="wk">
+<hr>
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-12">
@@ -26,8 +28,8 @@
             </tr>
           </thead>
           <tbody>
-
-            <tr *ngFor="let user of userList;index as i">
+            <!-- ? -->
+            <tr *ngFor="let user of userList | nameFilter :wk ;index as i">
               <td>
                 <input type="checkbox" [(ngModel)]="user.isSelect" (change)="checkSelect()">
               </td>

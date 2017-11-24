@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserMangerComponent implements OnInit {
   private isAll:boolean = false;
+  private wk:string = "";
 
   private userList:Array<any> = [
     {name:"aaa"},
