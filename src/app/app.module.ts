@@ -22,6 +22,7 @@ import { TwowayBinddataComponent } from './componets/dayThree/twoway-binddata/tw
 import { UserMangerComponent } from './componets/dayThree/user-manger/user-manger.component';
 import { CommonPipeComponent } from './componets/dayThree/common-pipe/common-pipe.component';
 import { UserPipeComponent } from './componets/dayThree/user-pipe/user-pipe.component';
+import { NameFilterTwoPipe } from './pipes/name-filter-two.pipe';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { UserPipeComponent } from './componets/dayThree/user-pipe/user-pipe.comp
     UserMangerComponent,
     CommonPipeComponent,
     UserPipeComponent,
+    NameFilterTwoPipe,
     
   ],
   imports: [

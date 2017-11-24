@@ -29,7 +29,20 @@
           </thead>
           <tbody>
             <!-- ? -->
-            <tr *ngFor="let user of userList | nameFilter :wk ;index as i">
+            <ng-template ngFor let-user [ngForOf]="userList" let-i="index">
+              <tr *ngIf=" user.name | nameFilterTwo : wk ">
+                <td>
+                  <input type="checkbox" [(ngModel)]="user.isSelect" (change)="checkSelect()">
+                </td>
+                <td>{{ i+1 }}</td>
+                <td>{{ user.name }}</td>
+                <td>
+                  <input type="button" class="btn btn-warning btn-xs" value="删除" (click)="doDelete(i)">
+                </td>
+              </tr>
+            </ng-template>
+
+            <!-- <tr *ngFor="let user of userList | nameFilter :wk ;index as i">
               <td>
                 <input type="checkbox" [(ngModel)]="user.isSelect" (change)="checkSelect()">
               </td>
@@ -38,7 +51,7 @@
               <td>
                 <input type="button" class="btn btn-warning btn-xs" value="删除" (click)="doDelete(i)">
               </td>
-            </tr>
+            </tr> -->
             
           </tbody>
         </table>
