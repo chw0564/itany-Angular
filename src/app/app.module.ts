@@ -16,6 +16,7 @@ import { StyleattributeComponent } from './componets/daytwo/styleattribute/style
 import { StructuralDirectivesComponent } from './componets/daytwo/structural-directives/structural-directives.component';
 import { NgForComponent } from './componets/dayThree/ng-for/ng-for.component';
 import { TwowayBinddataComponent } from './componets/dayThree/twoway-binddata/twoway-binddata.component';
+import { UserMangerComponent } from './componets/dayThree/user-manger/user-manger.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { TwowayBinddataComponent } from './componets/dayThree/twoway-binddata/tw
     StyleattributeComponent,
     StructuralDirectivesComponent,
     NgForComponent,
-    TwowayBinddataComponent
+    TwowayBinddataComponent,
+    UserMangerComponent
   ],
   imports: [
     BrowserModule,

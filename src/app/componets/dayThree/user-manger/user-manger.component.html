@@ -1,0 +1,45 @@
+<br><br>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <form class="form-inline">
+          <div class="form-group">
+            <label for="name">姓名</label>
+            <input type="text" class="form-control" name="name" id="name" [(ngModel)]="user.name">
+          </div>
+          <button type="添加" class="btn btn-success" (click)="doAdd()">添加</button>
+        </form>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-sm-12">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>
+                <input type="checkbox" [(ngModel)]="isAll" (change)="doSelect()">
+              </th>
+              <th>编号</th>
+              <th>姓名</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let user of userList;index as i">
+              <td>
+                <input type="checkbox" [(ngModel)]="user.isSelect" (change)="checkSelect()">
+              </td>
+              <td>{{ i+1 }}</td>
+              <td>{{ user.name }}</td>
+              <td>
+                <input type="button" class="btn btn-warning btn-xs" value="删除" (click)="doDelete(i)">
+              </td>
+            </tr>
+            
+          </tbody>
+        </table>
+    </div>
+  </div>
+</div>
