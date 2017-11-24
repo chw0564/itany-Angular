@@ -17,6 +17,7 @@ import { StructuralDirectivesComponent } from './componets/daytwo/structural-dir
 import { NgForComponent } from './componets/dayThree/ng-for/ng-for.component';
 import { TwowayBinddataComponent } from './componets/dayThree/twoway-binddata/twoway-binddata.component';
 import { UserMangerComponent } from './componets/dayThree/user-manger/user-manger.component';
+import { CommonPipeComponent } from './componets/dayThree/common-pipe/common-pipe.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { UserMangerComponent } from './componets/dayThree/user-manger/user-mange
     StructuralDirectivesComponent,
     NgForComponent,
     TwowayBinddataComponent,
-    UserMangerComponent
+    UserMangerComponent,
+    CommonPipeComponent
   ],
   imports: [
     BrowserModule,

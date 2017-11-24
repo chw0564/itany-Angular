@@ -1,0 +1,72 @@
+<h3>DecimalPipe 数值格式化</h3>
+<pre>
+  1、四舍五入
+  2、千位进制  1,999.99
+  语法
+  number_expression | number [ :digitInfo [ :locale ] ]
+     number_expression  数值 或者  有number返回值得 表达式
+     number  管道函数的调用修饰符
+     digitInfo  定义 数值格式化规则  （string）
+         格式 minIntegerDigits.minFractionDigits-maxFractionDigits
+            取值：
+              1、minIntegerDigits 定义最小的整数位数. Defaults to 1.
+              2、minFractionDigits 定义最小的小数位数. Defaults to 0.
+              3、maxFractionDigits 最大的小数位数. Defaults to 3.
+  默认规则
+    四舍五入 ==>  保留三位小数
+</pre>
+<h5>无管道：{{ num }}</h5>
+<h5>使用number：{{ num | number }}</h5>
+<h5>只保留整数位：{{ num | number :'1.0-0'}}</h5>
+<h5>最小的小数保留位：{{ num | number :'1.2-8'}}</h5>
+<h5>最小的整数保留位：{{ num | number :'10.2-8'}}</h5>
+
+
+<hr>
+<h3>CurrencyPipe 货币格式化</h3>
+<pre>
+    number_expression | currency [ :currencyCode [:display [:digitInfo [:locale]]]]
+    管道修饰符：currency
+    参数：currencyCode 货币代码  默认值 USD
+         display  
+            v4  取值为 boolean 类型  true 使用代码   false  使用符号
+            V5  取值 string
+              code: 使用 COED 格式.
+              symbol(default): 使用符号  （区分国家货币区域）.
+              symbol-narrow: 不区分国家货币区域 .
+         digitInfo  显示格式
+    默认格式：美元 ， 小数位保留 2 位
+</pre>
+<h5>货币格式化:{{ num | currency }}</h5>
+<h5>货币格式化:{{ num | currency : 'CNY'}}</h5>
+<h5>货币格式化:{{ num | currency : 'CNY' : 'symbol-narrow'}}</h5>
+<h5>货币格式化:{{ num | currency : 'JPY' }}</h5>
+<h5>美元:{{ num | currency : 'USD' : 'code'}}</h5>
+<h5>美元:{{ num | currency : 'USD' : 'symbol'}}</h5>
+<h5>美元:{{ num | currency : 'USD' : 'symbol-narrow'}}</h5>
+<hr>
+<h5>美元:{{ num | currency : 'USD' : 'symbol' : '4.1-1' }}</h5>
+<input type="text" [(ngModel)]="num">
+
+<hr>
+<h3>DatePipe 日期格式化</h3>
+<pre>
+  语法：date_expression | date [:format[:timezone[:locale]]]
+      管道表示符 ： date
+      参数： format  ：格式
+            timezone：时区
+      默认值  en-US 格式
+</pre>
+<h5>{{ day }}</h5>
+<h5>{{ day | date }}</h5>
+<h5>{{ day | date : 'yyyy年MM月dd日 HH:mm:ss' }}</h5>
+
+<h3>JsonPipe JSON数据格式化管道 （测试）</h3>
+<pre>
+    date_expression | json 
+</pre>
+<h5>{{ user }}</h5>
+<h5>{{ user | json }}</h5>
+<pre>
+  {{ user | json }}
+</pre>
