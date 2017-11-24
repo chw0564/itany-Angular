@@ -1,7 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms'
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 import { NewoneComponent } from './componets/dayOne/newone/newone.component';
 import { TemplateComponent } from './componets/daytwo/template/template.component';
 import { InsertdataComponent } from './componets/daytwo/insertdata/insertdata.component';
@@ -12,6 +15,7 @@ import { ClassattributeComponent } from './componets/daytwo/classattribute/class
 import { StyleattributeComponent } from './componets/daytwo/styleattribute/styleattribute.component';
 import { StructuralDirectivesComponent } from './componets/daytwo/structural-directives/structural-directives.component';
 import { NgForComponent } from './componets/dayThree/ng-for/ng-for.component';
+import { TwowayBinddataComponent } from './componets/dayThree/twoway-binddata/twoway-binddata.component';
 
 @NgModule({
   declarations: [
@@ -25,11 +29,13 @@ import { NgForComponent } from './componets/dayThree/ng-for/ng-for.component';
     ClassattributeComponent,
     StyleattributeComponent,
     StructuralDirectivesComponent,
-    NgForComponent
+    NgForComponent,
+    TwowayBinddataComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   // bootstrap: [AppComponent,NewoneComponent]

@@ -1,0 +1,48 @@
+<h3>双向数据绑定</h3>
+<!-- <input type="text" [value]="msg"> -->
+<!-- 
+  banana in box 
+  语法  [(ngModel)]
+        只适用于表单元素
+        
+-->
+<p>{{ msg }}</p>
+<input type="text" [(ngModel)]="msg" >
+
+<!-- 
+  单选框绑定时 选中时 会读取 value 属性值
+      没有指定 value 读取的是undefined
+-->
+<input type="radio" value="aaa" [(ngModel)]="radioData">
+<input type="radio" value="bbb" [(ngModel)]="radioData">
+
+<!-- 
+  下拉列表 
+-->
+<select [(ngModel)]="selectData">
+  <option value="1">a</option>
+  <option value="2">b</option>
+  <option value="3">c</option>
+  <option >d</option>
+</select>
+
+<hr>
+<!-- 
+  复选框
+    提供 value 还是不提供 value ==> 返回值 永远都是 true|false
+
+-->
+
+<input type="checkbox" value="cc1" [(ngModel)]="checkboxData">
+<input type="checkbox" value="cc2" [(ngModel)]="checkboxData">
+<input type="checkbox" value="cc3" [(ngModel)]="checkboxData">
+<input type="checkbox" value="cc4" [(ngModel)]="checkboxData">
+<hr>
+<input type="checkbox" [(ngModel)]="checkboxDataObj.a.isSelect">
+<input type="checkbox" [(ngModel)]="checkboxDataObj.b.isSelect">
+<input type="checkbox" [(ngModel)]="checkboxDataObj.c.isSelect">
+<input type="checkbox" [(ngModel)]="checkboxDataObj.d.isSelect">
+<hr>
+<div>
+    <input type="checkbox"  *ngFor="let item of checkboxDataObj1" [(ngModel)]="item.isSelect">
+</div>
