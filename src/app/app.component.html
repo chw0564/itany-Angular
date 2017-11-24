@@ -19,6 +19,15 @@
 <!-- day03 -->
 <!-- <app-ng-for></app-ng-for> -->
 <!-- <app-twoway-binddata></app-twoway-binddata> -->
-<app-user-manger></app-user-manger>
+<!-- <app-user-manger></app-user-manger> -->
 <!-- <app-common-pipe></app-common-pipe> -->
 <!-- <app-user-pipe></app-user-pipe> -->
+<p>{{ msg }}</p>
+<input type="text" [(ngModel)]="msg">
+<!-- 
+    自定义事件触发的方法中 
+    $event 就是 方法的传入参数
+ -->
+<app-load-data [message]="msg" [list]="arr" [obj]="user" 
+    (handleName)="getName($event)"
+></app-load-data>

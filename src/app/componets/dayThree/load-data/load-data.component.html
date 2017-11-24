@@ -1,0 +1,7 @@
+<hr>
+<input type="text" [(ngModel)]="message">
+<p>子组件的message: {{ message }}</p>
+<p>子组件的list: {{ list }}</p>
+<pre>子组件的obj: {{ obj | json }}</pre>
+<input type="button" value="发送数据" (click)="sendData()">
+<hr>

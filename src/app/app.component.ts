@@ -11,5 +11,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'itany';
+
+  private msg:string = "字符串";
+  private arr:Array<number> = [1,2,3,4];
+  private user:Object = {
+    name:"tom",
+    age:23
+  }
+
+  private getName(value){
+    console.log(value);
+    console.log("父组件的getName方法")
+  }
+
 }

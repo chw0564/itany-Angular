@@ -23,6 +23,7 @@ import { UserMangerComponent } from './componets/dayThree/user-manger/user-mange
 import { CommonPipeComponent } from './componets/dayThree/common-pipe/common-pipe.component';
 import { UserPipeComponent } from './componets/dayThree/user-pipe/user-pipe.component';
 import { NameFilterTwoPipe } from './pipes/name-filter-two.pipe';
+import { LoadDataComponent } from './componets/dayThree/load-data/load-data.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { NameFilterTwoPipe } from './pipes/name-filter-two.pipe';
     CommonPipeComponent,
     UserPipeComponent,
     NameFilterTwoPipe,
+    LoadDataComponent,
     
   ],
   imports: [
