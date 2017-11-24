@@ -1,0 +1,62 @@
+<h3>ngFor</h3>
+<hr>
+<h5>基础使用</h5>
+<pre>
+  * 只能循环数组 如果需要循环对象，可以使用es6 迭代器 *
+  let 变量名 of 要循环的内容
+      变量名  ==>  对应的是每次循环的元素，可以直接使用插值表达式的方式进行获取
+  ------------------------
+  let 变量名 of 要循环的内容 [ ; 
+                            [ index as i ;] 
+                            [ first as 变量名 ;] 
+                            [ last as 变量名 ;]
+                            [ even as 变量 ;]
+                            [ odd as 变量 ;]
+                          ]
+      index  ==>  循环位数（下标或者key）
+      first  ==>  boolean 当前循环值 是否是第一个
+      last   ==>  boolean 当前循环值 是否是最后一个
+      even   ==>  boolean 当前循环值 是否是偶数行
+      odd    ==>  boolean 当前循环值 是否是奇数行
+</pre>
+<ul>
+  <li *ngFor="let addr of addrs">{{ addr }}</li>
+</ul>
+<input type="button" value="添加城市">
+<h5>扩展使用</h5>
+<ul>
+  <li *ngFor="let addr of addrs; index as i">{{ i }}:{{ addr }}</li>
+</ul>
+<hr>
+<!-- 
+  第一条数据和最后一条数据 字体变大
+  偶数条  红色
+  奇数条  蓝色
+-->
+<ul>
+  <li *ngFor="let addr of addrs; 
+              index as i;
+              first as isFirst;
+              last as isLast;
+              even as isEven;
+              odd as isOdd;
+              "
+      [class.fs]="isFirst || isLast"
+      [class.red]="isEven"
+      [class.blue]="isOdd"
+  >
+      {{ i }}:{{ addr }}
+  </li>
+</ul>
+<hr>
+<pre>
+    辅助标签
+      以属性 ngFor 定义模板循环
+      [ngForOf]="被循环值"
+      let-xxx  定义一个变量 , 不赋值,表示每次循环到的参数
+      let-xxx="所需的参数" 定义变量  xxx变量名
+                index, first last  even odd
+</pre>
+<ng-template ngFor let-addr [ngForOf]="addrs" let-i="index">
+  <li>{{i+1}}:{{addr}}</li>
+</ng-template>

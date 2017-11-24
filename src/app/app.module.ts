@@ -11,6 +11,7 @@ import { HtmlattributeComponent } from './componets/daytwo/htmlattribute/htmlatt
 import { ClassattributeComponent } from './componets/daytwo/classattribute/classattribute.component';
 import { StyleattributeComponent } from './componets/daytwo/styleattribute/styleattribute.component';
 import { StructuralDirectivesComponent } from './componets/daytwo/structural-directives/structural-directives.component';
+import { NgForComponent } from './componets/dayThree/ng-for/ng-for.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { StructuralDirectivesComponent } from './componets/daytwo/structural-dir
     HtmlattributeComponent,
     ClassattributeComponent,
     StyleattributeComponent,
-    StructuralDirectivesComponent
+    StructuralDirectivesComponent,
+    NgForComponent
   ],
   imports: [
     BrowserModule,
