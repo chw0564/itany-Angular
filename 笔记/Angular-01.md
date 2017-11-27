@@ -1707,7 +1707,7 @@ Angular 对于页面的表单标签进行了特殊的处理，提供了两种对
 
 #### 17.1 模板式表单的应用
 
-+ 以页面模板为驱动，操作数据模型中的 校验规则  （视图模型 ==>  数据模型） ==> 校验规则
++ 以页面模板（视图模型）为驱动，操作数据模型中的 校验规则  （视图模型 ==>  数据模型） ==> 校验规则
 + 前面课程所定义的双向数据绑定，就是 模板表单中的 一部分内容
 + 需要在  `app.module.ts ` 的   imports 属性 中添加  `FormsModule`
 
@@ -1875,8 +1875,30 @@ export class TmplateTwoFormComponent implements OnInit {
 
   }
 }
-
 ```
+
+#### 17.2 响应式表单
+
++ 以数据模型为驱动，控制视图模型的显示效果，校验规则TS文件中
++ 需要在  `app.module.ts ` 的   imports 属性 中添加  `ReactiveFormsModule`
+
+| 类名          | 作用       | 指令                            |
+| ----------- | -------- | ----------------------------- |
+| FormGroup   | 定义表单组    | [formGroup]\|formGroupName    |
+| FormControl | 定义表单控件   | [formContro]\|formControlName |
+| FormArray   | 定义表单控件数组 | formArrayName                 |
+
++ 验证表单的嵌套使用 `FormGroup`  理论上 可以无限制的嵌套
+
+
+
+
+
+
+
+
+
+
 
 
 
