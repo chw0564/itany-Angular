@@ -1071,7 +1071,10 @@ export class NgForComponent implements OnInit {
 </ng-template>
 ```
 
-### 十三、伪双向数据绑定
+### 十三、(伪)双向数据绑定
+
++ **伪**  指的是学习的内容不完整
+
 
 + 所谓的双向数据绑定，指的是 **不论视图（view，html页面）或者 模型 （model 数据模型）中的哪一方发生了改变，另一方都会随之改变**
 + **Angular4 不再默认提供双向数据绑定，想要实现双向功能，需要加载模块  @angular/forms，响应式表单**
@@ -1511,7 +1514,7 @@ export class AppModule { }
 ng g pipe 管道名
 ```
 
-#### 十五、组件间通信
+### 十五、组件间通信
 
 #### 15.1 组件关系
 
@@ -1648,6 +1651,192 @@ export class AppComponent {
     console.log("父组件的getName方法")
   }
 
+}
+
+```
+
+
+
+### 十六、模板中的局部变量
+
+
+
+
+
+### 十七、表单处理
+
+Angular 对于页面的表单标签进行了特殊的处理，提供了两种对表单处理的方式：
+
++ 模板式表单
++ 响应式表单
+
+并额外的增加了相关的功能，数据校验
+
+#### 17.1 模板式表单的应用
+
++ 以页面模板为驱动，操作数据模型中的 校验规则  （视图模型 ==>  数据模型） ==> 校验规则
++ 前面课程所定义的双向数据绑定，就是 模板表单中的 一部分内容
++ 需要在  `app.module.ts ` 的   imports 属性 中添加  `FormsModule`
+
+**独立使用**
+
++ html
+
+```html
+<input type="text" [(ngModel)]="str" #inputObj required >
+<input type="text" [(ngModel)]="email" email required #inputObj2="ngModel" >
+<!-- pattern 正则匹配校验 -->
+<input type="text" [(ngModel)]="age" required pattern="^(\d{1,2}|100)$" #inputObj3="ngModel" >
+<!-- <pre>{{ inputObj.className }}</pre> -->
+<!-- 
+  ngModel中的value 是 被绑定的标签的 值 
+  ngModel中的value 是 被绑定的标签的 值 的有效性
+-->
+<pre>{{ inputObj2.value }}
+{{ inputObj2.valid }}
+{{ inputObj2.errors | json }}
+</pre>
+<pre>{{ inputObj3.value }}
+    {{ inputObj3.valid }}
+    {{ inputObj3.errors | json }}
+    </pre>
+<input type="button" value="获取值" [disabled]="!inputObj2.valid" >
+```
+
++ ts
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-tmplate-form',
+  templateUrl: './tmplate-form.component.html',
+  styleUrls: ['./tmplate-form.component.css']
+})
+export class TmplateFormComponent implements OnInit {
+
+  private str:string="";
+
+  private email:string="";
+
+  private age:number;
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+  private getNgModel(obj){
+    console.log(obj);
+  }
+}
+```
+
+**表单应用**
+
++ html
+
+```html
+<h3>用户注册的功能</h3>
+<!-- 
+  在一个已知的表单中 如果定义了  ngModel，
+  那么该表单会隐式的出现一个 特殊属性绑定  [ngForm]
+-->
+<form action="#" method="post" #myForm="ngForm">
+  <div>
+    <label for="name">name</label>
+    <!--
+      ngForm 需要以 name 属性作为 元素值得key
+    -->
+    <input type="text" id="name" name="name" [(ngModel)]="name" required #nameNg="ngModel">
+    <span class="error" *ngIf="myForm.hasError('required','name')">名称不能为空</span>
+    <!-- <pre>{{ nameNg.valid }}
+      {{ nameNg.errors | json }}
+    </pre> -->
+  </div>
+  <div>
+    <label for="pwd">password</label>
+    <input type="password" id="pwd" name="pwd" [(ngModel)]="pwd" required >
+    <span class="error" *ngIf="myForm.hasError('required','pwd')">密码不能为空</span>
+  </div>
+  <div>
+    <label for="age">age</label>
+    <input type="text" id="age" name="age" [(ngModel)]="age" required pattern="^(\d{1,2}|100)$" >
+    <span class="error" *ngIf="myForm.hasError('required','age')">年龄不能为空</span> 
+    <span class="error" *ngIf="myForm.hasError('pattern','age')">取值 0 ~ 100</span>    
+    
+  </div>
+  <div>
+    <label>sex</label>
+    <input type="radio" value="男" name="sex" [(ngModel)]="sex" required>男
+    <input type="radio" value="女" name="sex" [(ngModel)]="sex" required>女
+    <span class="error" *ngIf="myForm.hasError('required','sex')">性别必须</span>     
+  </div>
+  <div>
+    <label for="profession">profession</label>
+    <select id="profession" name="profession" [(ngModel)]="profession" required >
+      <option value="web">web</option>
+      <option value="java">java</option>
+      <option value="ui">ui</option>
+    </select>
+    <span class="error" *ngIf="myForm.hasError('required','profession')">专业必须</span>     
+    
+  </div>
+  <div>
+    <input type="button" value="提交" [disabled]="!myForm.valid" (click)="getFormValue(myForm)" >
+  </div>
+</form>
+<pre>表单中所有的表单元素的值:
+{{ myForm.value | json }}
+表单的状态：(当表单中所有的元素 验证状态都为true ,该属性才为true)
+{{ myForm.valid }}
+表单的错误消息(在模板中没有有)
+{{ myForm.errors | json }}
+----------------------------------------------------------------------------
+ngForm 、 ngModel 、…… 都具有的方法
+getError(errorCode: string, path?: string[]): 获取错误消息
+    只传递一个参数（errorCode） 获取的是当前方法的调用者的错误消息
+        errorCode 指的是  验证规则的名称的字符串表现形式
+    path  指定获取当前 调用者 的内部 某个 表单元素的错误消息
+hasError(errorCode: string, path?: string[]): boolean 判断是否存在错误消息
+----------------------------------------------------------------------------
+表单中错误获取
+name-required:{{ myForm.getError('required','name') }}
+age-pattern:{{ myForm.getError('pattern','age') | json }}
+表单中错误消息是否存在
+name-required:{{ myForm.hasError('required','name') }}
+age-pattern:{{ myForm.hasError('pattern','age') }}
+age-required:{{ myForm.hasError('required','age') }}
+</pre>
+```
+
++ ts
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-tmplate-two-form',
+  templateUrl: './tmplate-two-form.component.html',
+  styleUrls: ['./tmplate-two-form.component.css']
+})
+export class TmplateTwoFormComponent implements OnInit {
+
+  // private name:string;
+  // private pwd:string;
+  // private age:number;
+  // private sex:string;
+  // private profession:string;
+
+  constructor() { }
+  ngOnInit() {
+  }
+
+  private getFormValue(obj){
+    // console.log(this.name);
+    console.log(obj.value);
+
+  }
 }
 
 ```
