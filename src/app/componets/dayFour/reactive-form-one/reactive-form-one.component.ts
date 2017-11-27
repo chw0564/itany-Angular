@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators ,FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-reactive-form-one',
@@ -25,7 +25,22 @@ export class ReactiveFormOneComponent implements OnInit {
     Validators.minLength(4),
     Validators.maxLength(10)
   ]);
-  
+
+  // 用于定义 表单的行为规则
+  // FormGroup(arg1,arg2,arg3)
+  //    arg1 : json<FormControl> 
+  private registForm = new FormGroup({
+    // 默认值 tom  验证规则  必须  4-6
+    name:new FormControl(),
+    // ""    必须   4-6
+    pwd:new FormControl(),
+    // ""    必须   4-6
+    repwd:new FormControl(),
+    // "男"   必须
+    sex:new FormControl(),
+    // ""     必须 emial
+    email:new FormControl()
+  });
 
   constructor() { }
 

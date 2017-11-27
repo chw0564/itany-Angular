@@ -6,17 +6,47 @@
 <span class="error" *ngIf="name.hasError('minlength')">最小4位</span>
 <span class="error" *ngIf="name.hasError('maxlength')">最大10位</span>
 
-
-
-
-<pre>
+<!-- <pre>
   {{ name }}
   {{ name.value }}
   {{ name.valid }}
   {{ name.errors | json }}
-  ----------------------------------
   {{ name.hasError('minlength') }}
   {{ name.getError('minlength') | json }}
-  
-</pre>
+</pre> -->
+<hr>
+<!-- 
+  1、为当前form指定 表单控制器
+  2、将表单控制器的 对象 于模板中的一个 form 表单进行关联
+  3、直接在需要绑定控制器的 表单元素上使用 属性关联的方式进行 组件的控制
+  ==> input 标签上使用 formGroup => formControlName
+    ==> 将表单元素的 name 属性值 设置为 formGroup 对应的 FormControl的key值
+ -->
+<form action="#" method="post" [formGroup]="registForm" >
+  <div>
+    <label for="name">名称:</label>
+    <!-- name 是在当前表单中的 一个 控制变量 -->
+    <input type="text" id="name" formControlName="name">
+  </div>
+  <div>
+    <label for="pwd">密码:</label>
+    <input type="text" id="pwd" formControlName="pwd">
+  </div>
+  <div>
+    <label for="repwd">重复密码:</label>
+    <input type="text" id="repwd" formControlName="repwd">
+  </div>
+  <div>
+    <label for="sex">性别:</label>
+    <input type="radio" id="sex" value="男" formControlName="sex">男
+    <input type="radio" id="sex" value="女" formControlName="sex">女   
+  </div>
+  <div>
+    <label for="email">电子邮箱:</label>
+    <input type="text" id="email" formControlName="email">
+  </div>
+  <div>
+    <input type="button" value="提交">
+  </div>
+</form>
 
