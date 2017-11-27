@@ -24,6 +24,9 @@ import { CommonPipeComponent } from './componets/dayThree/common-pipe/common-pip
 import { UserPipeComponent } from './componets/dayThree/user-pipe/user-pipe.component';
 import { NameFilterTwoPipe } from './pipes/name-filter-two.pipe';
 import { LoadDataComponent } from './componets/dayThree/load-data/load-data.component';
+import { LocalVariablesComponent } from './componets/dayFour/local-variables/local-variables.component';
+import { TmplateFormComponent } from './componets/dayFour/tmplate-form/tmplate-form.component';
+import { TmplateTwoFormComponent } from './componets/dayFour/tmplate-two-form/tmplate-two-form.component';
 
 
 @NgModule({
@@ -47,11 +50,15 @@ import { LoadDataComponent } from './componets/dayThree/load-data/load-data.comp
     UserPipeComponent,
     NameFilterTwoPipe,
     LoadDataComponent,
+    LocalVariablesComponent,
+    TmplateFormComponent,
+    TmplateTwoFormComponent,
     
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    // 模板表单
     FormsModule
   ],
   providers: [],

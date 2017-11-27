@@ -1,0 +1,15 @@
+<p>{{ str }}</p>
+<input type="text" [(ngModel)]="str" #inputObj >
+<input type="text" [(ngModel)]="str" #inputObj2="ngModel" >
+<!--
+   提供一个在模板中定义变量的方法
+   关键字 #变量名   ==>  写在标签属性上
+   两种写法：
+      #变量名   为当前元素的DOM对象 添加一个 可被当前页面使用的变量名
+      #变量名="指令名"  为当前元素的DOM对象 所绑定的指令对象 提供 一个可被页面使用的变量
+   访问方式，请使用 页面属性访问方式
+-->
+<pre>{{ inputObj.value }}
+  {{ inputObj.tagName }}</pre>
+<input type="button" value="获取DOM对象" (click)="getInputDom(inputObj)">
+<input type="button" value="获取指令对象" (click)="getInputDom(inputObj2)">

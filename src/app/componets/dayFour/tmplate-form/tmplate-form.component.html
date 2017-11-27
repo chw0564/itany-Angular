@@ -1,0 +1,18 @@
+<input type="text" [(ngModel)]="str" #inputObj required >
+<input type="text" [(ngModel)]="email" email required #inputObj2="ngModel" >
+<!-- pattern 正则匹配校验 -->
+<input type="text" [(ngModel)]="age" required pattern="^(\d{1,2}|100)$" #inputObj3="ngModel" >
+<!-- <pre>{{ inputObj.className }}</pre> -->
+<!-- 
+  ngModel中的value 是 被绑定的标签的 值 
+  ngModel中的value 是 被绑定的标签的 值 的有效性
+-->
+<pre>{{ inputObj2.value }}
+{{ inputObj2.valid }}
+{{ inputObj2.errors | json }}
+</pre>
+<pre>{{ inputObj3.value }}
+    {{ inputObj3.valid }}
+    {{ inputObj3.errors | json }}
+    </pre>
+<input type="button" value="获取值" [disabled]="!inputObj2.valid" >

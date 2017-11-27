@@ -1,0 +1,71 @@
+<h3>用户注册的功能</h3>
+<!-- 
+  在一个已知的表单中 如果定义了  ngModel，
+  那么该表单会隐式的出现一个 特殊属性绑定  [ngForm]
+-->
+<form action="#" method="post" #myForm="ngForm">
+  <div>
+    <label for="name">name</label>
+    <!--
+      ngForm 需要以 name 属性作为 元素值得key
+    -->
+    <input type="text" id="name" name="name" [(ngModel)]="name" required #nameNg="ngModel">
+    <span class="error" *ngIf="myForm.hasError('required','name')">名称不能为空</span>
+    <!-- <pre>{{ nameNg.valid }}
+      {{ nameNg.errors | json }}
+    </pre> -->
+  </div>
+  <div>
+    <label for="pwd">password</label>
+    <input type="password" id="pwd" name="pwd" [(ngModel)]="pwd" required >
+    <span class="error" *ngIf="myForm.hasError('required','pwd')">密码不能为空</span>
+  </div>
+  <div>
+    <label for="age">age</label>
+    <input type="text" id="age" name="age" [(ngModel)]="age" required pattern="^(\d{1,2}|100)$" >
+    <span class="error" *ngIf="myForm.hasError('required','age')">年龄不能为空</span> 
+    <span class="error" *ngIf="myForm.hasError('pattern','age')">取值 0 ~ 100</span>    
+    
+  </div>
+  <div>
+    <label>sex</label>
+    <input type="radio" value="男" name="sex" [(ngModel)]="sex" required>男
+    <input type="radio" value="女" name="sex" [(ngModel)]="sex" required>女
+    <span class="error" *ngIf="myForm.hasError('required','sex')">性别必须</span>     
+  </div>
+  <div>
+    <label for="profession">profession</label>
+    <select id="profession" name="profession" [(ngModel)]="profession" required >
+      <option value="web">web</option>
+      <option value="java">java</option>
+      <option value="ui">ui</option>
+    </select>
+    <span class="error" *ngIf="myForm.hasError('required','profession')">专业必须</span>     
+    
+  </div>
+  <div>
+    <input type="button" value="提交" [disabled]="!myForm.valid" (click)="getFormValue(myForm)" >
+  </div>
+</form>
+<pre>表单中所有的表单元素的值:
+{{ myForm.value | json }}
+表单的状态：(当表单中所有的元素 验证状态都为true ,该属性才为true)
+{{ myForm.valid }}
+表单的错误消息(在模板中没有有)
+{{ myForm.errors | json }}
+----------------------------------------------------------------------------
+ngForm 、 ngModel 、…… 都具有的方法
+getError(errorCode: string, path?: string[]): 获取错误消息
+    只传递一个参数（errorCode） 获取的是当前方法的调用者的错误消息
+        errorCode 指的是  验证规则的名称的字符串表现形式
+    path  指定获取当前 调用者 的内部 某个 表单元素的错误消息
+hasError(errorCode: string, path?: string[]): boolean 判断是否存在错误消息
+----------------------------------------------------------------------------
+表单中错误获取
+name-required:{{ myForm.getError('required','name') }}
+age-pattern:{{ myForm.getError('pattern','age') | json }}
+表单中错误消息是否存在
+name-required:{{ myForm.hasError('required','name') }}
+age-pattern:{{ myForm.hasError('pattern','age') }}
+age-required:{{ myForm.hasError('required','age') }}
+</pre>
