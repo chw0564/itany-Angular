@@ -1652,16 +1652,49 @@ export class AppComponent {
   }
 
 }
-
 ```
-
-
 
 ### 十六、模板中的局部变量
 
+```html
+<p>{{ str }}</p>
+<input type="text" [(ngModel)]="str" #inputObj >
+<input type="text" [(ngModel)]="str" #inputObj2="ngModel" >
+<!--
+   提供一个在模板中定义变量的方法
+   关键字 #变量名   ==>  写在标签属性上
+   两种写法：
+      #变量名   为当前元素的DOM对象 添加一个 可被当前页面使用的变量名
+      #变量名="指令名"  为当前元素的DOM对象 所绑定的指令对象 提供 一个可被页面使用的变量
+   访问方式，请使用 页面属性访问方式
+-->
+<pre>{{ inputObj.value }}
+  {{ inputObj.tagName }}</pre>
+<input type="button" value="获取DOM对象" (click)="getInputDom(inputObj)">
+<input type="button" value="获取指令对象" (click)="getInputDom(inputObj2)">
+```
 
+```typescript
+import { Component, OnInit } from '@angular/core';
 
+@Component({
+  selector: 'app-local-variables',
+  templateUrl: './local-variables.component.html',
+  styleUrls: ['./local-variables.component.css']
+})
+export class LocalVariablesComponent implements OnInit {
 
+  private str:string = "变量值";
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+  private getInputDom(obj){
+      console.log(obj);
+  }
+}
+```
 
 ### 十七、表单处理
 
@@ -1677,6 +1710,10 @@ Angular 对于页面的表单标签进行了特殊的处理，提供了两种对
 + 以页面模板为驱动，操作数据模型中的 校验规则  （视图模型 ==>  数据模型） ==> 校验规则
 + 前面课程所定义的双向数据绑定，就是 模板表单中的 一部分内容
 + 需要在  `app.module.ts ` 的   imports 属性 中添加  `FormsModule`
+
+**ng-Model的样式类**
+
+![表单验证](./img/表单验证.png)
 
 **独立使用**
 
