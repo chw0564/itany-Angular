@@ -1,5 +1,8 @@
 .error{
-    color: red;
+    color: #faece9;
+    background-color: #ff6c00;
+    border: 1px solid #a44601;
+    padding: 4px;
 }
 input.ng-invalid{
     /* color: red; */

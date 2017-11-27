@@ -1,0 +1,79 @@
+<!-- 定义控制器识别符 -->
+<input type="text" [formControl]="name">
+<span *ngIf="name.valid">校验通过</span>
+<!-- <span *ngIf="!name.valid">校验不通过</span> -->
+<span class="error" *ngIf="name.hasError('required')">必须填写</span>
+<span class="error" *ngIf="name.hasError('minlength')">最小4位</span>
+<span class="error" *ngIf="name.hasError('maxlength')">最大10位</span>
+
+<!-- <pre>
+  {{ name }}
+  {{ name.value }}
+  {{ name.valid }}
+  {{ name.errors | json }}
+  {{ name.hasError('minlength') }}
+  {{ name.getError('minlength') | json }}
+</pre> -->
+<hr>
+<!-- 
+  1、为当前form指定 表单控制器
+  2、将表单控制器的 对象 于模板中的一个 form 表单进行关联
+  3、直接在需要绑定控制器的 表单元素上使用 属性关联的方式进行 组件的控制
+  ==> input 标签上使用 formGroup => formControlName
+    ==> 将表单元素的 name 属性值 设置为 formGroup 对应的 FormControl的key值
+ -->
+<form action="#" method="post" [formGroup]="registForm" >
+  <div>
+    <label for="name">名称:</label>
+    <!-- name 是在当前表单中的 一个 控制变量 -->
+    <input type="text" id="name" formControlName="name">
+    <span *ngIf="registForm.getError('required','name')" class="error">用户名不能为空</span>
+    <span *ngIf="registForm.getError('minlength','name')||registForm.getError('maxlength','name')" class="error">用户名在4-6位之间</span>
+    <!-- <pre>
+      get(name) : 获取当前调用者 内部 子控制器对象
+      {{ registForm }}
+      {{ registForm.get('name') }}
+      {{ registForm.get('name').value }}
+      {{ registForm.get('name').valid }}      
+      {{ registForm.get('name').errors | json }}
+      ===================
+      getError()
+      hasError()
+      {{ registForm.get('name').getError('required') | json }}
+      {{ registForm.get('name').getError('minlength') | json }}     
+      {{ registForm.get('name').getError('maxlength') | json }} 
+      ===================
+      {{ registForm.getError('required','name') | json }}
+      {{ registForm.getError('minlength','name') | json }}     
+      {{ registForm.getError('maxlength','name') | json }}          
+    </pre> -->
+  </div>
+  <div>
+    <label for="pwd">密码:</label>
+    <input type="text" id="pwd" formControlName="pwd">
+    <span *ngIf="cv('required','pwd')" class="error">密码不能为空</span>
+    <span *ngIf="cv('minlength','pwd')||cv('maxlength','pwd')" class="error">密码在4-6位之间</span>
+  </div>
+  <div>
+    <label for="repwd">重复密码:</label>
+    <input type="text" id="repwd" formControlName="repwd">
+    <span *ngIf="cv('required','repwd')" class="error">密码不能为空</span>
+    <span *ngIf="cv('minlength','repwd')||cv('maxlength','repwd')" class="error">密码在4-6位之间</span>
+  </div>
+  <div>
+    <label for="sex">性别:</label>
+    <input type="radio" id="sex" value="男" formControlName="sex">男
+    <input type="radio" id="sex" value="女" formControlName="sex">女   
+    <span *ngIf="cv('required','sex')" class="error">性别不能为空</span>    
+  </div>
+  <div>
+    <label for="email">电子邮箱:</label>
+    <input type="text" id="email" formControlName="email">
+    <span *ngIf="cv('required','email')" class="error">电子邮箱不能为空</span>
+    <span *ngIf="cv('pattern','email')" class="error">电子邮箱格式不正确</span>
+  </div>
+  <div>
+    <input type="button" value="提交" [disabled]="!registForm.valid" (click)="getData()">
+  </div>
+</form>
+

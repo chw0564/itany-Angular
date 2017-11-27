@@ -22,31 +22,80 @@
   ==> input 标签上使用 formGroup => formControlName
     ==> 将表单元素的 name 属性值 设置为 formGroup 对应的 FormControl的key值
  -->
-<form action="#" method="post" [formGroup]="registForm" >
+<form action="#" method="post" [formGroup]="registForm1" >
   <div>
     <label for="name">名称:</label>
     <!-- name 是在当前表单中的 一个 控制变量 -->
     <input type="text" id="name" formControlName="name">
+    <span *ngIf="registForm1.getError('required','name')" class="error">用户名不能为空</span>
+    <span *ngIf="registForm1.getError('minlength','name')||registForm1.getError('maxlength','name')" class="error">用户名在4-6位之间</span>
+    <!-- <pre>
+      get(name) : 获取当前调用者 内部 子控制器对象
+      {{ registForm }}
+      {{ registForm.get('name') }}
+      {{ registForm.get('name').value }}
+      {{ registForm.get('name').valid }}      
+      {{ registForm.get('name').errors | json }}
+      ===================
+      getError()
+      hasError()
+      {{ registForm.get('name').getError('required') | json }}
+      {{ registForm.get('name').getError('minlength') | json }}     
+      {{ registForm.get('name').getError('maxlength') | json }} 
+      ===================
+      {{ registForm.getError('required','name') | json }}
+      {{ registForm.getError('minlength','name') | json }}     
+      {{ registForm.getError('maxlength','name') | json }}          
+    </pre> -->
   </div>
-  <div>
-    <label for="pwd">密码:</label>
-    <input type="text" id="pwd" formControlName="pwd">
-  </div>
-  <div>
-    <label for="repwd">重复密码:</label>
-    <input type="text" id="repwd" formControlName="repwd">
-  </div>
+  <fieldset formGroupName="pwdGroup">
+    <div>
+        <label for="pwd">密码:</label>
+        <input type="text" id="pwd" formControlName="pwd">
+        <!-- <span *ngIf="cv('required','pwd')" class="error">密码不能为空</span>
+        <span *ngIf="cv('minlength','pwd')||cv('maxlength','pwd')" class="error">密码在4-6位之间</span> -->
+        <!-- 
+          hasError(arg1,arg2)
+            arg2  string|Array
+                Array  父子类以此排序
+        -->
+        <span *ngIf="registForm1.hasError('required',['pwdGroup','pwd'])" class="error">密码不能为空</span>
+        <span *ngIf="cv('minlength',['pwdGroup','pwd'])||cv('maxlength',['pwdGroup','pwd'])" class="error">密码在4-6位之间</span>
+      </div>
+      <div>
+        <label for="repwd">重复密码:</label>
+        <input type="text" id="repwd" formControlName="repwd">
+        <span *ngIf="cv('required',['pwdGroup','repwd'])" class="error">密码不能为空</span>
+        <span *ngIf="cv('minlength',['pwdGroup','repwd'])||cv('maxlength',['pwdGroup','repwd'])" class="error">密码在4-6位之间</span>
+        <span *ngIf="cv('noEquals','pwdGroup')">{{ registForm1.getError('noEquals','pwdGroup') }}</span>
+        <!-- <pre>{{ registForm1.hasError('noEquals','pwdGroup') | json  }}
+            {{ registForm1.getError('noEquals','pwdGroup') | json  }}
+        </pre> -->
+      </div>
+  </fieldset>
   <div>
     <label for="sex">性别:</label>
     <input type="radio" id="sex" value="男" formControlName="sex">男
     <input type="radio" id="sex" value="女" formControlName="sex">女   
+    <span *ngIf="cv('required','sex')" class="error">性别不能为空</span>    
   </div>
-  <div>
-    <label for="email">电子邮箱:</label>
-    <input type="text" id="email" formControlName="email">
+
+  <div formArrayName="emails">
+    <!-- 
+      controls 当前对象中 包含所有子控制器的数组
+    -->
+    <div *ngFor="let email of registForm1.get('emails').controls;index as i;last as isLast">
+      <label for="email">电子邮箱:</label>
+      <input type="text" id="email" [formControlName]="i">
+      <input type="button" value="-" (click)="subEmail(i)">
+      <input *ngIf="isLast" type="button" value="+" (click)="addEmail()">
+      <span *ngIf="cv('required',['emails',i])" class="error">电子邮箱不能为空</span>
+      <span *ngIf="cv('pattern',['emails',i])" class="error">电子邮箱格式不正确</span>
+    </div>
   </div>
+  
   <div>
-    <input type="button" value="提交">
+    <input type="button" value="提交" [disabled]="!registForm1.valid" (click)="getData()">
   </div>
 </form>
 
