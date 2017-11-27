@@ -1,0 +1,22 @@
+<!-- 定义控制器识别符 -->
+<input type="text" [formControl]="name">
+<span *ngIf="name.valid">校验通过</span>
+<!-- <span *ngIf="!name.valid">校验不通过</span> -->
+<span class="error" *ngIf="name.hasError('required')">必须填写</span>
+<span class="error" *ngIf="name.hasError('minlength')">最小4位</span>
+<span class="error" *ngIf="name.hasError('maxlength')">最大10位</span>
+
+
+
+
+<pre>
+  {{ name }}
+  {{ name.value }}
+  {{ name.valid }}
+  {{ name.errors | json }}
+  ----------------------------------
+  {{ name.hasError('minlength') }}
+  {{ name.getError('minlength') | json }}
+  
+</pre>
+

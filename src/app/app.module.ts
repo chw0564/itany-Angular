@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import { PowPipe } from './pipes/pow.pipe'
 import { NameFilterPipe } from './pipes/name-filter.pipe';
@@ -27,39 +27,42 @@ import { LoadDataComponent } from './componets/dayThree/load-data/load-data.comp
 import { LocalVariablesComponent } from './componets/dayFour/local-variables/local-variables.component';
 import { TmplateFormComponent } from './componets/dayFour/tmplate-form/tmplate-form.component';
 import { TmplateTwoFormComponent } from './componets/dayFour/tmplate-two-form/tmplate-two-form.component';
+import { ReactiveFormOneComponent } from './componets/dayFour/reactive-form-one/reactive-form-one.component';
 
 
 @NgModule({
   declarations: [
-    PowPipe,
-    NameFilterPipe,
+    // PowPipe,
+    // NameFilterPipe,
     AppComponent,
-    NewoneComponent,
-    TemplateComponent,
-    InsertdataComponent,
-    BindeventComponent,
-    DomattributeComponent,
-    HtmlattributeComponent,
-    ClassattributeComponent,
-    StyleattributeComponent,
-    StructuralDirectivesComponent,
-    NgForComponent,
-    TwowayBinddataComponent,
-    UserMangerComponent,
-    CommonPipeComponent,
-    UserPipeComponent,
-    NameFilterTwoPipe,
-    LoadDataComponent,
-    LocalVariablesComponent,
-    TmplateFormComponent,
-    TmplateTwoFormComponent,
+    // NewoneComponent,
+    // TemplateComponent,
+    // InsertdataComponent,
+    // BindeventComponent,
+    // DomattributeComponent,
+    // HtmlattributeComponent,
+    // ClassattributeComponent,
+    // StyleattributeComponent,
+    // StructuralDirectivesComponent,
+    // NgForComponent,
+    // TwowayBinddataComponent,
+    // UserMangerComponent,
+    // CommonPipeComponent,
+    // UserPipeComponent,
+    // NameFilterTwoPipe,
+    // LoadDataComponent,
+    // LocalVariablesComponent,
+    // TmplateFormComponent,
+    // TmplateTwoFormComponent,
+    ReactiveFormOneComponent,
     
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     // 模板表单
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   // bootstrap: [AppComponent,NewoneComponent]
