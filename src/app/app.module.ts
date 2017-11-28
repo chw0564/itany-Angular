@@ -29,6 +29,7 @@ import { TmplateFormComponent } from './componets/dayFour/tmplate-form/tmplate-f
 import { TmplateTwoFormComponent } from './componets/dayFour/tmplate-two-form/tmplate-two-form.component';
 import { ReactiveFormOneComponent } from './componets/dayFour/reactive-form-one/reactive-form-one.component';
 import { HomeworkComponent } from './componets/dayFive/homework/homework.component';
+import { FormBuilderComponent } from './componets/dayFive/form-bulider/form-bulider.component'
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { HomeworkComponent } from './componets/dayFive/homework/homework.compone
     // TmplateTwoFormComponent,
     ReactiveFormOneComponent,
     HomeworkComponent,
+    FormBuilderComponent
     
   ],
   imports: [

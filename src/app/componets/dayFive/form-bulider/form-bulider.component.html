@@ -1,0 +1,52 @@
+<h3>信息登录</h3>
+<form action="#" [formGroup]='setInfo'>
+  <div formGroupName='nameList' >
+    <label>姓名：</label>
+    <!-- <pre>{{ setInfo.errors | json }}</pre> -->
+    <div>
+      <label for="">姓氏：</label>
+      <input type="text" formControlName="surname">
+      <span *ngIf="setInfo.hasError('required',['nameList','surname'])">不能为空</span>
+    </div>
+    <div>
+      <label for="">名称：</label>
+      <input type="text" formControlName="name">
+      <span *ngIf="setInfo.hasError('required',['nameList','name'])">不能为空</span>
+    </div>
+    <div>
+      <label for="">昵称：</label>
+      <input type="text" formControlName="nickName">
+      <span *ngIf="setInfo.hasError('required',['nameList','nickName'])">不能为空</span>
+    </div>
+  </div>
+  <div>
+    <label for="">地址：</label>
+    <input type="text" formControlName="address">
+    <span *ngIf="setInfo.hasError('required','address')">不能为空</span>
+  </div>
+  <div formArrayName="telList">
+    <label for="">电话号码列表：</label>
+    <input type="button" value="添加新电话" (click)="addTel()">
+    <!-- <span *ngIf="setInfo.hasError('error','telList')">至少有一个电话</span> -->
+    <span *ngIf="setInfo.hasError('error','telList')">{{setInfo.getError('error','telList')}}</span>    
+    <div *ngFor="let tel of setInfo.get('telList').controls;index as i;last as isLast;first as isFirst">
+       <!-- <label for="">电话：</label>
+       <input type="text" [formControlName]="i">
+       <input *ngIf="!isFirst" type="button" value="-" (click)="subTel(i)">
+       <input *ngIf="isFirst" type="button" value="+" (click)="addTel()">
+       <span *ngIf="setInfo.hasError('required',['telList',i])">不能为空</span>
+       <span *ngIf="setInfo.hasError('pattern',['telList',i])">格式不正确</span> -->
+       <label for="">电话：</label>
+       <input type="text" [formControlName]="i">
+       <input type="button" value="-" (click)="subTel(i)">
+       <!-- <input *ngIf="isLast" type="button" value="+" (click)="addTel()"> -->
+       <span *ngIf="setInfo.hasError('required',['telList',i])">不能为空</span>
+       <span *ngIf="setInfo.hasError('pattern',['telList',i])">格式不正确</span>
+    </div>
+  </div>
+  <div>
+    <input type="button" value="获取数据" [disabled]="!setInfo.valid">
+  </div>
+
+
+</form>
