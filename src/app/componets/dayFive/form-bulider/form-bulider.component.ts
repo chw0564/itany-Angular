@@ -47,7 +47,7 @@ export class FormBuilderComponent implements OnInit {
           name:["",[Validators.required]],
           nickName:["",[Validators.required]]
         },{
-          validator:this.show   // group 的自定义全局校验规则
+           validator:this.show   // group 的自定义全局校验规则
         }),
         // telList:new FormArray([
         //     new FormControl("",[Validators.required,Validators.pattern("1\\d{10}")])
