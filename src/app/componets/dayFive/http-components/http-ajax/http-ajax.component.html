@@ -1,0 +1,23 @@
+<h1>AJAX请求</h1>
+<input type="button" value="获取数据" (click)="getData()">
+<h4>用户信息</h4>
+<p>姓名：{{ user.name }}</p>
+<p>年龄：{{ user.age }}</p>
+<hr>
+<form action="" [formGroup]="userForm">
+    <input type="text" formControlName="name">
+    <input type="text" formControlName="age">
+</form>
+
+<input type="button" value="get携带数据" (click)="sendData()">
+<input type="button" value="post携带数据" (click)="sendDataPost()">
+
+<hr>
+<!-- 
+    百度查询，
+    cb
+ -->
+<input type="text" [(ngModel)]="wk">
+<input type="button" value="查询" (click)="seachData()">
+
+<hr>

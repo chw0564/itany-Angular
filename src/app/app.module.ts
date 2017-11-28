@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { HttpModule,JsonpModule } from '@angular/http';
 
 import { PowPipe } from './pipes/pow.pipe'
 import { NameFilterPipe } from './pipes/name-filter.pipe';
@@ -29,7 +30,12 @@ import { TmplateFormComponent } from './componets/dayFour/tmplate-form/tmplate-f
 import { TmplateTwoFormComponent } from './componets/dayFour/tmplate-two-form/tmplate-two-form.component';
 import { ReactiveFormOneComponent } from './componets/dayFour/reactive-form-one/reactive-form-one.component';
 import { HomeworkComponent } from './componets/dayFive/homework/homework.component';
-import { FormBuilderComponent } from './componets/dayFive/form-bulider/form-bulider.component'
+import { FormBuilderComponent } from './componets/dayFive/form-bulider/form-bulider.component';
+import { DiComponentComponent } from './componets/dayFive/DI-components/di-component/di-component.component'
+import { DataService } from './componets/dayFive/DI-components/dataService';
+import { DiComponentChildComponent } from './componets/dayFive/DI-components/di-component-child/di-component-child.component';
+import { DiComponentChild2Component } from './componets/dayFive/DI-components/di-component-child2/di-component-child2.component';
+import { HttpAjaxComponent } from './componets/dayFive/http-components/http-ajax/http-ajax.component';
 
 
 @NgModule({
@@ -58,7 +64,11 @@ import { FormBuilderComponent } from './componets/dayFive/form-bulider/form-buli
     // TmplateTwoFormComponent,
     ReactiveFormOneComponent,
     HomeworkComponent,
-    FormBuilderComponent
+    FormBuilderComponent,
+    DiComponentComponent,
+    DiComponentChildComponent,
+    DiComponentChild2Component,
+    HttpAjaxComponent
     
   ],
   imports: [
@@ -66,9 +76,17 @@ import { FormBuilderComponent } from './componets/dayFive/form-bulider/form-buli
     AppRoutingModule,
     // 模板表单
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    // 同服务器的正常请求
+    HttpModule,
+    // 跨服务的跨域请求
+    JsonpModule
   ],
-  providers: [],
+  // 提供者 用于为当前项目中所有需要注入参数的 组件 提供 对象的 指定
+  // 自定义的 对象 提供
+  providers: [
+    DataService
+  ],
   // bootstrap: [AppComponent,NewoneComponent]
   bootstrap: [AppComponent]
 })

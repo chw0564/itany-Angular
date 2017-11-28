@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DataService } from './componets/dayFive/DI-components/dataService';
 
 // 一个组件包含 .ts  .html .css
 //     三个文件一般采用相同的名称
@@ -8,7 +9,10 @@ import { Component } from '@angular/core';
   // 该组件所对应的模板页
   templateUrl: './app.component.html',
   //  该组件所对应的 局部样式表
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers:[
+    DataService
+  ]
 })
 export class AppComponent {
 

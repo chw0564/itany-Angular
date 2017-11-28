@@ -20,6 +20,8 @@ export class FormBuilderComponent implements OnInit {
   //   ],this.checkNums)
   // })
 
+  // private fb:FormBuilder = new FormBuilder();
+
   private setInfo;
 
   constructor(private fb:FormBuilder) { 
