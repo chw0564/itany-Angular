@@ -28,6 +28,7 @@ import { LocalVariablesComponent } from './componets/dayFour/local-variables/loc
 import { TmplateFormComponent } from './componets/dayFour/tmplate-form/tmplate-form.component';
 import { TmplateTwoFormComponent } from './componets/dayFour/tmplate-two-form/tmplate-two-form.component';
 import { ReactiveFormOneComponent } from './componets/dayFour/reactive-form-one/reactive-form-one.component';
+import { HomeworkComponent } from './componets/dayFive/homework/homework.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { ReactiveFormOneComponent } from './componets/dayFour/reactive-form-one/
     // TmplateFormComponent,
     // TmplateTwoFormComponent,
     ReactiveFormOneComponent,
+    HomeworkComponent,
     
   ],
   imports: [
