@@ -361,7 +361,7 @@ export class AppComponent {
 
 #### 1、组件的构成
 
-![3](/Users/appleuser/Desktop/Angular/code/笔记/img/3.png)
+![3](./img/3.png)
 
 #### 2、文件结构
 
@@ -1888,7 +1888,451 @@ export class TmplateTwoFormComponent implements OnInit {
 | FormControl | 定义表单控件   | [formContro]\|formControlName |
 | FormArray   | 定义表单控件数组 | formArrayName                 |
 
-+ 验证表单的嵌套使用 `FormGroup`  理论上 可以无限制的嵌套
+**单文件应用**
+
+```html
+<!-- 定义控制器识别符 -->
+<input type="text" [formControl]="name">
+<span *ngIf="name.valid">校验通过</span>
+<!-- <span *ngIf="!name.valid">校验不通过</span> -->
+<span class="error" *ngIf="name.hasError('required')">必须填写</span>
+<span class="error" *ngIf="name.hasError('minlength')">最小4位</span>
+<span class="error" *ngIf="name.hasError('maxlength')">最大10位</span>
+
+<pre>
+  {{ name }}
+  {{ name.value }}
+  {{ name.valid }}
+  {{ name.errors | json }}
+  {{ name.hasError('minlength') }}
+  {{ name.getError('minlength') | json }}
+</pre>
+```
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators ,FormGroup,FormArray } from '@angular/forms';
+
+@Component({
+  selector: 'app-reactive-form-one',
+  templateUrl: './reactive-form-one.component.html',
+  styleUrls: ['./reactive-form-one.component.css']
+})
+export class ReactiveFormOneComponent implements OnInit {
+
+  // private str="sss";
+  // 模板表单
+  // private name:string = "";
+  // FormControl 用于定义模板中 表单元素的行为规则
+  //    特指  value  和校验状态 
+  // 每一个FormControl都只对应一个表单组件（radio）
+  //    FormControl(arg1,arg2)
+  //     arg1  基本数据类型   表单组件的默认值
+  //     arg2  function|Array<function> 校验规则函数
+  // private name = new FormControl("默认值",Validators.required);
+  private name = new FormControl("默认值",[
+    Validators.required,
+    Validators.minLength(4),
+    Validators.maxLength(10)
+  ]);
+```
+
+**表单组使用**
+
+```html
+<!-- 
+  1、为当前form指定 表单控制器
+  2、将表单控制器的 对象 于模板中的一个 form 表单进行关联
+  3、直接在需要绑定控制器的 表单元素上使用 属性关联的方式进行 组件的控制
+  ==> input 标签上使用 formGroup => formControlName
+    ==> 将表单元素的 name 属性值 设置为 formGroup 对应的 FormControl的key值
+ -->
+<form action="#" method="post" [formGroup]="registForm" >
+  <div>
+    <label for="name">名称:</label>
+    <!-- name 是在当前表单中的 一个 控制变量 -->
+    <input type="text" id="name" formControlName="name">
+    <span *ngIf="registForm.getError('required','name')" class="error">用户名不能为空</span>
+    <span *ngIf="registForm.getError('minlength','name')||registForm.getError('maxlength','name')" class="error">用户名在4-6位之间</span>
+    <!-- <pre>
+      get(name) : 获取当前调用者 内部 子控制器对象
+      {{ registForm }}
+      {{ registForm.get('name') }}
+      {{ registForm.get('name').value }}
+      {{ registForm.get('name').valid }}      
+      {{ registForm.get('name').errors | json }}
+      ===================
+      getError()
+      hasError()
+      {{ registForm.get('name').getError('required') | json }}
+      {{ registForm.get('name').getError('minlength') | json }}     
+      {{ registForm.get('name').getError('maxlength') | json }} 
+      ===================
+      {{ registForm.getError('required','name') | json }}
+      {{ registForm.getError('minlength','name') | json }}     
+      {{ registForm.getError('maxlength','name') | json }}          
+    </pre> -->
+  </div>
+  <div>
+    <label for="pwd">密码:</label>
+    <input type="text" id="pwd" formControlName="pwd">
+    <span *ngIf="cv('required','pwd')" class="error">密码不能为空</span>
+    <span *ngIf="cv('minlength','pwd')||cv('maxlength','pwd')" class="error">密码在4-6位之间</span>
+  </div>
+  <div>
+    <label for="repwd">重复密码:</label>
+    <input type="text" id="repwd" formControlName="repwd">
+    <span *ngIf="cv('required','repwd')" class="error">密码不能为空</span>
+    <span *ngIf="cv('minlength','repwd')||cv('maxlength','repwd')" class="error">密码在4-6位之间</span>
+  </div>
+  <div>
+    <label for="sex">性别:</label>
+    <input type="radio" id="sex" value="男" formControlName="sex">男
+    <input type="radio" id="sex" value="女" formControlName="sex">女   
+    <span *ngIf="cv('required','sex')" class="error">性别不能为空</span>    
+  </div>
+  <div>
+    <label for="email">电子邮箱:</label>
+    <input type="text" id="email" formControlName="email">
+    <span *ngIf="cv('required','email')" class="error">电子邮箱不能为空</span>
+    <span *ngIf="cv('pattern','email')" class="error">电子邮箱格式不正确</span>
+  </div>
+  <div>
+    <input type="button" value="提交" [disabled]="!registForm.valid" (click)="getData()">
+  </div>
+</form>
+
+```
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators ,FormGroup,FormArray } from '@angular/forms';
+
+@Component({
+  selector: 'app-reactive-form-one',
+  templateUrl: './reactive-form-one.component.html',
+  styleUrls: ['./reactive-form-one.component.css']
+})
+export class ReactiveFormOneComponent implements OnInit {
+  // 用于定义 表单的行为规则
+  // FormGroup(arg1,arg2,arg3)
+  //    arg1 : json<FormControl> 
+  //    arg2 : 组别统一校验，在此处添加的校验规则 会生效到所有的 当前组中的控件上 , 只能完成自定义校验的加载
+  private registForm = new FormGroup({
+    // 默认值 tom  验证规则  必须  4-6
+    name:new FormControl("tom",[
+      Validators.required,
+      Validators.minLength(4),
+      Validators.maxLength(6)
+    ]),
+    // ""    必须   4-6
+    pwd:new FormControl("",[
+      Validators.required,
+      Validators.minLength(4),
+      Validators.maxLength(6)
+    ]),
+    // ""    必须   4-6
+    repwd:new FormControl("",[
+      Validators.required,
+      Validators.minLength(4),
+      Validators.maxLength(6)
+    ]),
+    // "男"   必须
+    sex:new FormControl("男",Validators.required),
+    // ""     必须 emial
+    email:new FormControl("",[
+      Validators.required,
+      // Validators.email
+      // 正则验证
+      // abc@111.com
+      // ^[\w]+@[\w]+\.[a-z]+$
+      // "\n"
+      Validators.pattern("[\\w]+@[\\w]+\\.[a-z]+")
+    ])
+  });
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+  // 验证方法所返回的值 随意  null , {}
+  checkPwd(fg:FormGroup){
+    // console.log("---",fg);
+    // AbstractControl 是 FormGroup 和 FormControl 父类
+    // 完成类型转换
+    let pwd:FormControl = fg.get("pwd") as FormControl;
+    // 不完成类型转换
+    let repwd = fg.get("repwd");
+    // 建议直接返回消息
+    return pwd.value==repwd.value? null:{'noEquals':'两次密码不相同'}
+  }
+
+  // checkValid(errorCode,path){
+  // cv(errorCode,path){
+  //   return this.registForm.hasError(errorCode,path)
+  // }
+  cv(errorCode,path){
+    return this.registForm.hasError(errorCode,path)
+  }
+
+  getData(){
+     console.log(this.registForm.value);
+  }
+}
+```
+
++ 验证表单的嵌套使用 `FormGroup`  理论上 可以无限制的嵌套，提供组别嵌套
++ 验证表单的嵌套使用 `FormArray` 提供动态表单验证元素
+
+
+```html
+<!-- 
+  1、为当前form指定 表单控制器
+  2、将表单控制器的 对象 于模板中的一个 form 表单进行关联
+  3、直接在需要绑定控制器的 表单元素上使用 属性关联的方式进行 组件的控制
+  ==> input 标签上使用 formGroup => formControlName
+    ==> 将表单元素的 name 属性值 设置为 formGroup 对应的 FormControl的key值
+ -->
+<form action="#" method="post" [formGroup]="registForm1" >
+  <div>
+    <label for="name">名称:</label>
+    <!-- name 是在当前表单中的 一个 控制变量 -->
+    <input type="text" id="name" formControlName="name">
+    <span *ngIf="registForm1.getError('required','name')" class="error">用户名不能为空</span>
+    <span *ngIf="registForm1.getError('minlength','name')||registForm1.getError('maxlength','name')" class="error">用户名在4-6位之间</span>
+  </div>
+  <fieldset formGroupName="pwdGroup">
+    <div>
+        <label for="pwd">密码:</label>
+        <input type="text" id="pwd" formControlName="pwd">
+        <!-- 
+          hasError(arg1,arg2)
+            arg2  string|Array
+                Array  父子类以此排序
+        -->
+        <span *ngIf="registForm1.hasError('required',['pwdGroup','pwd'])" class="error">密码不能为空</span>
+        <span *ngIf="cv('minlength',['pwdGroup','pwd'])||cv('maxlength',['pwdGroup','pwd'])" class="error">密码在4-6位之间</span>
+      </div>
+      <div>
+        <label for="repwd">重复密码:</label>
+        <input type="text" id="repwd" formControlName="repwd">
+        <span *ngIf="cv('required',['pwdGroup','repwd'])" class="error">密码不能为空</span>
+        <span *ngIf="cv('minlength',['pwdGroup','repwd'])||cv('maxlength',['pwdGroup','repwd'])" class="error">密码在4-6位之间</span>
+        <span *ngIf="cv('noEquals','pwdGroup')">{{ registForm1.getError('noEquals','pwdGroup') }}</span>
+      </div>
+  </fieldset>
+  <div>
+    <label for="sex">性别:</label>
+    <input type="radio" id="sex" value="男" formControlName="sex">男
+    <input type="radio" id="sex" value="女" formControlName="sex">女   
+    <span *ngIf="cv('required','sex')" class="error">性别不能为空</span>    
+  </div>
+
+  <div formArrayName="emails">
+    <!-- 
+      controls 当前对象中 包含所有子控制器的数组
+    -->
+    <div *ngFor="let email of registForm1.get('emails').controls;index as i;last as isLast">
+      <label for="email">电子邮箱:</label>
+      <input type="text" id="email" [formControlName]="i">
+      <input type="button" value="-" (click)="subEmail(i)">
+      <input *ngIf="isLast" type="button" value="+" (click)="addEmail()">
+      <span *ngIf="cv('required',['emails',i])" class="error">电子邮箱不能为空</span>
+      <span *ngIf="cv('pattern',['emails',i])" class="error">电子邮箱格式不正确</span>
+    </div>
+  </div>
+  
+  <div>
+    <input type="button" value="提交" [disabled]="!registForm1.valid" (click)="getData()">
+  </div>
+</form>
+```
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators ,FormGroup,FormArray } from '@angular/forms';
+
+@Component({
+  selector: 'app-reactive-form-one',
+  templateUrl: './reactive-form-one.component.html',
+  styleUrls: ['./reactive-form-one.component.css']
+})
+export class ReactiveFormOneComponent implements OnInit {
+
+  // 用于定义 表单的行为规则
+  // FormGroup(arg1,arg2,arg3)
+  //    arg1 : json<FormControl> 
+  //    arg2 : 组别统一校验，在此处添加的校验规则 会生效到所有的 当前组中的控件上 , 只能完成自定义校验的加载
+  // 验证修改
+  // FormGroup ==> 被嵌套的对象 一定要指定其父类所在位置
+  private registForm1 = new FormGroup({
+    // 默认值 tom  验证规则  必须  4-6
+    name:new FormControl("tom",[
+      Validators.required,
+      Validators.minLength(4),
+      Validators.maxLength(6)
+    ]),
+    pwdGroup:new FormGroup({
+       // ""    必须   4-6
+      pwd:new FormControl("",[
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(6)
+      ]),
+      // ""    必须   4-6
+      repwd:new FormControl("",[
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(6)
+      ]),
+    },
+      // 该方法会默认携带一个参数 就是当前的 FormGroup 对象
+      this.checkPwd
+    ), 
+    // "男"   必须
+    sex:new FormControl("男",Validators.required),
+    // ""     必须 emial
+    emails:new FormArray([
+      new FormControl("",[Validators.required,Validators.pattern("[\\w]+@[\\w]+\\.[a-z]+")]),
+      new FormControl("",[Validators.required,Validators.pattern("[\\w]+@[\\w]+\\.[a-z]+")])
+    ])
+  });
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+  // 验证方法所返回的值 随意  null , {}
+  checkPwd(fg:FormGroup){
+    // console.log("---",fg);
+    // AbstractControl 是 FormGroup 和 FormControl 父类
+    // 完成类型转换
+    let pwd:FormControl = fg.get("pwd") as FormControl;
+    // 不完成类型转换
+    let repwd = fg.get("repwd");
+    // 建议直接返回消息
+    return pwd.value==repwd.value? null:{'noEquals':'两次密码不相同'}
+  }
+
+  cv(errorCode,path){
+    return this.registForm1.hasError(errorCode,path)
+  }
+
+  getData(){
+    console.log(this.registForm1.value);
+  }
+
+  subEmail(index){
+    let fa:FormArray  = this.registForm1.get("emails") as FormArray;
+    fa.removeAt(index);
+  }
+
+  addEmail(){
+    let fa:FormArray  = this.registForm1.get("emails") as FormArray;
+    fa.push(new FormControl("",[Validators.required,Validators.pattern("[\\w]+@[\\w]+\\.[a-z]+")]));
+  }
+
+}
+```
+
+#### 17.3 FormBuilder 快速响应式表单构建
+
++ builder 结尾的方法或者类    称为  构建器
++ 将所有的对象创建和方法调用 封装为参数传递
++ FormBuilder 使用方式
+  + 对于一个组件类，可以在构造中 直接传入 FormBuilder对象
+  + 所以该对象的使用，不能早于 FormBuilder 的传入和赋值
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { FormGroup,FormControl,Validators,FormArray,FormBuilder } from '@angular/forms';
+
+@Component({
+  selector: 'app-form-bulider',
+  templateUrl: './form-bulider.component.html',
+  styleUrls: ['./form-bulider.component.css']
+})
+export class FormBuilderComponent implements OnInit {
+
+  // private setInfo = new FormGroup({
+  //   nameList:new FormGroup({
+  //     surname:new FormControl("",[Validators.required]),
+  //     name:new FormControl("",Validators.required),
+  //     nickName:new FormControl("",Validators.required)
+  //   }),
+  //   address:new FormControl("",Validators.required),
+  //   telList:new FormArray([
+  //     new FormControl("",[Validators.required,Validators.pattern("1\\d{10}")])
+  //   ],this.checkNums)
+  // })
+
+  private setInfo;
+
+  constructor(private fb:FormBuilder) { 
+    this.createForm()
+  }
+
+  ngOnInit() {
+  }
+
+  private createForm(){
+     // FormBuilder中的 group() 方法 等效于  new FormGroup({})
+     this.setInfo = this.fb.group({
+        // address:new FormControl("",Validators.required),
+        // key : value  
+        // 名称   FormControl 的参数  [a,b]  a==> 默认值   b==> 校验规则 fun|Array<fn>
+        //       FormGroup|FormArray
+        address:["",Validators.required],
+        //   nameList:new FormGroup({
+        //     surname:new FormControl("",[Validators.required]),
+        //     name:new FormControl("",Validators.required),
+        //     nickName:new FormControl("",Validators.required)
+        //   }),
+        nameList:this.fb.group({
+          surname:["",[Validators.required]],
+          name:["",[Validators.required]],
+          nickName:["",[Validators.required]]
+        },{
+          validator:this.show   // group 的自定义全局校验规则
+        }),
+        // telList:new FormArray([
+        //     new FormControl("",[Validators.required,Validators.pattern("1\\d{10}")])
+        //   ],this.checkNums)
+        telList:this.fb.array([
+          ["",[Validators.required,Validators.pattern("1\\d{10}")]]
+        ],this.checkNums)
+     })
+  }
+
+  private show(){
+    console.log(11111);
+    return null;
+  }
+
+  private checkNums(fa:FormArray){
+    let telNums = fa.controls.length;
+    console.log(telNums);
+    return telNums==0 ? {"error":"至少有一个电话"}:null;
+  }
+
+  private addTel(){
+    let telList:FormArray = this.setInfo.get("telList") as FormArray;
+    telList.push(new FormControl("",[Validators.required,Validators.pattern("1\\d{10}")]))
+  }
+
+  private subTel(index){
+    let telList:FormArray = this.setInfo.get("telList") as FormArray;
+    // if(telList.controls.length==1){
+    //   return;
+    // }
+    telList.removeAt(index);
+  }
+
+}
+```
+
 
 
 
