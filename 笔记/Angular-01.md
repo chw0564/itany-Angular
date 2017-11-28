@@ -4,6 +4,12 @@
 
 ### 一、Angular 简介
 
+是一个基于  MVC  MVVM SPA 的 项目框架
+
++ 数据层   service
++ 视图层   html
++ 控制层   router
+
 用于解决、实现 SPA （ 单页应用程序 ）项目
 
 简化DOM的操作，动态DOM 对象的监视和更新
