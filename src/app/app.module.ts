@@ -36,6 +36,12 @@ import { DataService } from './componets/dayFive/DI-components/dataService';
 import { DiComponentChildComponent } from './componets/dayFive/DI-components/di-component-child/di-component-child.component';
 import { DiComponentChild2Component } from './componets/dayFive/DI-components/di-component-child2/di-component-child2.component';
 import { HttpAjaxComponent } from './componets/dayFive/http-components/http-ajax/http-ajax.component';
+import { RouterParentComponent } from './componets/daySix/router-parent/router-parent.component';
+import { RouterChildOneComponent } from './componets/daySix/router-child-one/router-child-one.component';
+import { RouterChildTwoComponent } from './componets/daySix/router-child-two/router-child-two.component';
+import { RouterMenuComponent } from './componets/daySix/router-menu/router-menu.component';
+import { RouterChildOneOneComponent } from './componets/daySix/router-child-one-one/router-child-one-one.component';
+import { RouterChildOneTwoComponent } from './componets/daySix/router-child-one-two/router-child-one-two.component';
 
 
 @NgModule({
@@ -68,7 +74,13 @@ import { HttpAjaxComponent } from './componets/dayFive/http-components/http-ajax
     DiComponentComponent,
     DiComponentChildComponent,
     DiComponentChild2Component,
-    HttpAjaxComponent
+    HttpAjaxComponent,
+    RouterParentComponent,
+    RouterChildOneComponent,
+    RouterChildTwoComponent,
+    RouterMenuComponent,
+    RouterChildOneOneComponent,
+    RouterChildOneTwoComponent
     
   ],
   imports: [
