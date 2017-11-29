@@ -382,11 +382,101 @@ export class HttpAjaxComponent implements OnInit {
 
 ### 二十、路由
 
++ 一个Angular 项目，可能是由多个组件组成，在一些页面中，不分内容 可能会根据用户的行为发生变化，怎么去切换页面的内容
++ MVVM  SPA   如何通过用户行为 却确定 显示的页面（DOM的替换和渲染）==>  Component
++ Angular 的路由机制，动态修改页面中DOM元素，使得 然用户看起页面发生了更改，其实只是使用了一个组件替代了当前显示组件的位置
+
+#### 20.1 几个概念
+
+| 类名            | 标签名               | 指令名        | 作用                                       |
+| ------------- | ----------------- | ---------- | ---------------------------------------- |
+| Routes        | -                 | -          | 配置路由选项，通过保存URL和组件的关系，以完成在哪个    *地方*    显示 |
+| Router        | -                 | -          | 运行过程中执行的路由对象，TS代码中对于路由的控制                |
+| ActivateRoute | -                 | -          | 当前激活的路由对象（当前路由的地址，传递参数……）                |
+| RouterLink    | -                 | routerLink | 是在HTML页面中声明路由的导航，创建一个具有 a 标签跳转功能的元素      |
+| RouterOutlet  | \<router-outlet\> | -          | 路由出口，是在HTML 页面中定义一个 组件占位符，为将要显示的组件提供填写位置 |
+
+#### 20.2 路由的基本用法
+
+##### 1、创建 app-routing-module.ts 文件
+
+```typescript
+import { NgModule } from '@angular/core'
+import { Routes , RouterModule } from '@angular/router'
+
+// Routes 的使用 ，路由的映射定义
+const routes:Routes = [];
+
+//完成 Angular 的模块定义 
+@NgModule({
+    imports:[RouterModule.forRoot(routes)]
+    exports:[RouterModule]
+})
+export class AppRoutingModule{ }
+```
+
+##### 2、加载并导入模块
+
+**app.module.ts**
+
+```typescript
+imports :[
+    AppRoutingModule   // 名字可以随便写，是一个自定义模块类
+]
+```
+
+> 当在创建项目时  指定了  —routing  参数，上述两步不需要在手动编写
+
+```powershell
+ng new 项目名 --routing
+```
+
+##### 3、路由的映射配置
+
++ 定义 URL 和组件的关系 已经 组件路由和组件路由的关系（子路由）
+
+```typescript
+// Routes = [{},{},{}……]
+//   其中的每一个对象 都是 一个 URL 和组件的映射
+const routes:Routes = [
+  //{path:"",component:"",chilren:[]}
+  //    path 定义URL地址
+  //    component 用于指定映射组件
+  //    chilren 定义子路由  取值类型 为 []
+];
+```
+
+##### 4、在模板中使用
+
++ RouterOutlet  在一个组件中  有且仅有一个  name='primary'  `<router-outlet>`
+
+##### 5、子路由的定义
 
 
 
 
 
+##### 6、路由的搜索
+
+![Snip20171129_5](./img/Snip20171129_5.png)
+
+
+
+##### 7、重定向路由
+
++ 用户访问一个url，在项目可以不为该url指定组件，指向另外一个url 
+
+##### 8、路由的参数传递
+
+###### 8.1 传统的get 传参数
+
+```
+http://127.0.0.1:4200/book?id=1&name=aa
+```
+
+###### 8.2 rest 风格写法
+
++  需要在路由中定义参数名称
 
 ### 二十一、项目打包和发布
 
