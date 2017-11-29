@@ -450,37 +450,316 @@ const routes:Routes = [
 
 + RouterOutlet  在一个组件中  有且仅有一个  name='primary'  `<router-outlet>`
 
+```html
+<div class="container">
+
+  <div class="col-lg-2 col-lg-offset-1">
+      <ul>
+        <li>
+          <a routerLink="/regist" >注册</a>
+        </li>
+        <li>
+          <a routerLink="/login" >登录</a>
+        </li>
+        <li>
+          <a routerLink="/about" >关于我们</a>
+        </li>
+      </ul>
+  </div>
+  <div class="col-lg-8">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+```
+
 ##### 5、子路由的定义
 
+```typescript
+{
+    path:'parent',
+    component:ParentRouterComponent
+    ,children:[
+      {path:'',component:ParentRouterComponent},
+      // /parent/child
+      // 会使用组件模板替换parent组件模板中的router-outlet
+      {path:'child',component:ChildComponent}
+    ]
+  }, 
+```
 
+```html
+<h3>
+  <a routerLink="./">当前</a>
+</h3>
 
-
+<h3>
+  <!-- 相对路径  相对于浏览器地址栏的路径 -->
+  <a routerLink="child">子路由-child</a>
+  <a routerLink="./child">子路由-./child</a>
+  <!-- 绝对路径  相对于项目根路径的路径   localhost:4200 -->
+  <a routerLink="/child">子路由-/child</a>
+</h3>
+<hr>
+<router-outlet></router-outlet>
+```
 
 ##### 6、路由的搜索
 
 ![Snip20171129_5](./img/Snip20171129_5.png)
 
-
-
 ##### 7、重定向路由
 
 + 用户访问一个url，在项目可以不为该url指定组件，指向另外一个url 
 
+```typescript
+当发送某个url，该url不指向 任何组件，指向另一个url
+
+     // 在url中一部分出现** ， 不代表通配符
+      {path:'regist/**',component:RegistComponent},
+      // redirectTo:重定向到
+      // /loginPage/log  ==> prefix ===> 匹配前缀 ===> 使用redirectTo的值替换前缀 ===> aaa/log
+      // /loginPage/log  ==> full ===> 完全匹配 ===> 'loginPage/log' ==> LoginComponent
+      //  注意：   1、路由的匹配策略pathMatch prefix代表匹配前缀（默认值）,full 完全匹配
+      //          2、'' 是所有的url的前缀
+      //              ====> 所有的url都匹配'' 
+      //              ====> "" 如果使用重定向路由，一定要提供pathMatch  并且值要是 full
+      {path:'loginPage',redirectTo:"aaa",pathMatch:"prefix"},
+```
+
 ##### 8、路由的参数传递
 
-###### 8.1 传统的get 传参数
+###### 8-1 传统get方式传参
 
+MainComponent
+
+```html
+<input type="text" [(ngModel)]="username" >
+<!-- /about?name=abc -->
+<a [routerLink]="'/about'" [queryParams]="{name:username}">传统get方式--到关于我们</a>
 ```
-http://127.0.0.1:4200/book?id=1&name=aa
+
+AboutComponent
+
+```typescript
+  registUser:string;
+  constructor(
+    private activitedRoute:ActivatedRoute
+  ) { 
+    this.registUser = this.activitedRoute.snapshot.queryParams["name"];
+  }
 ```
 
-###### 8.2 rest 风格写法
+```html
+<p>注册的用户的用户名是：{{registUser}}</p>
+```
 
-+  需要在路由中定义参数名称
+###### 8-2 rest风格参数
+
+| get               | rest           |
+| ----------------- | -------------- |
+| /user/delete?id=1 | /user/delete/1 |
+
+请求参数作为url的一部分
+
+组件模板
+
+```html
+<input type="text" [(ngModel)]="username" >
+
+<!-- /about?name=abc -->
+<hr>
+<a [routerLink]="'/about'" [queryParams]="{name:username}">传统get方式--到关于我们</a>
+
+<hr>
+<a [routerLink]="'/about/zhangsan'">REST风格传递参数-y1-1</a>
+<a [routerLink]="'/about/username'">REST风格传递参数-y1-2</a>
+<a [routerLink]="'/about/' + username">REST风格传递参数-y1-2</a>
+<hr>
+<a [routerLink]="['/about','zhangsan']">REST风格传递参数-y2-1</a>
+<a [routerLink]="['/about',username]">REST风格传递参数-y2-2</a>
+```
+
+路由目标页
+
+```typescript
+  otherName:string;
+  constructor(
+    private activitedRoute:ActivatedRoute
+  ) { 
+    this.otherName = this.activitedRoute.snapshot.params["someName"];
+  }
+```
+
+路由配置
+
+```typescript
+  {path:'about/:someName',component:AboutusComponent},
+```
+
+##### 9、辅助路由（多路由）
+
+带有name属性的router-outlet
+
+> ​	一个页面上可以有且仅有一个 主路由 primary 
+>
+> ​	但是可以有多个辅助路由
+
+```html
+ <div class="col-lg-8">
+    <router-outlet></router-outlet>
+  </div>
+ 
+
+  <div class="ccc fixBottom">
+    <router-outlet name="otherOutlet"></router-outlet>
+  </div>
+```
+
+```typescript
+{path:"loginWithOther",component:LoginComponent,outlet:'otherOutlet'},
+```
+
+```html
+   <li>
+            <a [routerLink]="[{outlets: { primary:'regist',otherOutlet:'loginWithOther' } }]">显示登录到辅助路由</a>
+        </li>
+        <li>
+            <a [routerLink]="[{outlets: { otherOutlet:null } }]">隐藏辅助路由</a>
+        </li>
+
+  <div class="col-lg-8">
+    <router-outlet></router-outlet>
+  </div>
+ 
+
+  <div class="ccc fixBottom">
+    <router-outlet name="otherOutlet"></router-outlet>
+  </div>
+```
+
+##### 10、路由守卫
+
+控制是否能够 激活 或者 离开 某个路由
+
+是一些钩子（在特定场景下执行的特定方法，一般情况下，钩子函数不需要程序员自己调用）
+
+| 名称            | 作用                  |
+| ------------- | ------------------- |
+| canActivate   | 决定是否激活（进入）某个路由      |
+| canDeactivate | 决定是否可以离开某个路由        |
+| resolve       | 在进入某个路由前的守卫，用于初始化数据 |
+
+1、定义ts类
+
+类中方法的方法名、参数、返回值
+
+@Injectable装饰器
+
+```typescript
+import { CanActivate, CanDeactivate, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
+import { EditComponent } from "./edit/edit.component";
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class Gard implements CanActivate,CanDeactivate<EditComponent>,Resolve<string>{
+    
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
+        // 进入路有前执行，用于初始化数据
+        console.log("准备进入eidt")
+        return null;
+    }
+    canDeactivate(component: EditComponent, currentRoute: ActivatedRouteSnapshot, currentState: RouterStateSnapshot, nextState?: RouterStateSnapshot) {
+        // 返回boolean类型  true 能离开 路由
+        if(component.username != "aaa")
+        {
+            return window.confirm("您输入的内容不是aaa，确认要离开吗？");
+        }
+    }
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
+        // 返回boolean类型  true 能进入/激活 路由
+        let name = route.queryParams["username"];
+        return name == "admin";
+    }
+
+}
+```
+
+2、配置DI(app.module.ts)
+
+```typescript
+  providers: [
+    Gard
+  ],
+```
+
+3、在路由中配置守卫
+
+```typescript
+  {path:"edit",component:EditComponent,
+    canActivate:[Gard],
+    canDeactivate:[Gard],
+    resolve:{
+      result:Gard
+    }
+  },
+```
+
+##### 11、404的处理
+
+```typescript
+ //在路由的最后位置，可以配置带有通配符的映射关系
+  //路由的匹配规则是从上到下（从数组的第一个元素开始），依次匹配 ，直到找到第一个匹配的路由
+  {path:'**',component:NotfoundComponent}
+```
+
+##### 12、在ts中事件路由的跳转
+
+```typescript
+constructor(
+    private router:Router
+  ) { }
+
+
+  toDir()
+  {
+    // 参数是一个[]，数组中包含路径,和 routerLink的值一致
+    this.router.navigate(['/dir']);
+  }
+```
+
+```html
+<button (click)="toDir()">到指令</button>
+```
+
+
 
 ### 二十一、项目打包和发布
 
+#### 1、打包
 
+```powershell
+ng build
+ng build --base-href=/项目名/
+```
+
+输出目录：项目/dist
+
+> 注意：配置一个provider
+
+```typescript
+ // 浏览器的定位策略
+ {provide:LocationStrategy,useClass:HashLocationStrategy}
+```
+
+
+
+#### 2、发布
+
+将打包生成的代码按照特定的web服务器规范放到特定位置
+
+
+
+> 注意: index.html 中的 <base href="/"> ！！！！
 
 
 
